@@ -33,6 +33,7 @@ def data_loader():
 
 def process_data(X_train, y_train, X_test, y_test):
     """
+    Processes data: Normalizes features to range [0, 1] and flattens feature vector
 
     Args:
         X_train:

@@ -1,0 +1,5 @@
+.idea/
+.ipynb_checkpoints/
+src/__init__.py
+src/__pycache__/
+numpy_hands_on_solutions.ipynb

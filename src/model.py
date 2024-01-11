@@ -2,26 +2,22 @@ import numpy as np
 from .model_functions import sigmoid, softmax
 
 class NN:
+    """
+    Simple neural network with three layers, implemented with numpy
+    """
     def __init__(self,
                     input_size=784,
                     hidden1_size=128,
                     hidden2_size=64,
                     output_size=10):
 
-        self.dW3 = 0
-        self.db3 = 0
-        self.dW2 = 0
-        self.db2 = 0
-        self.dW1 = 0
-        self.db1 = 0
-
         self.input_size = input_size
         self.hidden1_size = hidden1_size
         self.hidden2_size = hidden2_size
         self.output_size = output_size
 
+        # Initialize weights
         self.W1, self.W2, self.W3, self.b1, self.b2, self.b3 = self.initialize_wb()
-
 
     def initialize_wb(self):
         """
@@ -53,7 +49,16 @@ class NN:
         return W1, W2, W3, b1, b2, b3
 
     def forward_pass(self, x_batch, y_batch, gradient=True):
-        """Forward pass through neural net"""
+        """
+        Args:
+            x_batch (numpy.ndarray): input vector
+            y_batch (numpy.ndarray): target vector
+            gradient (Boolean): Whether gradient should be calculated or not
+
+        Returns:
+            output (nump.ndarray): output vector
+        """
+
         # Forward pass
         z1 = np.dot(x_batch, self.W1) + self.b1
         a1 = sigmoid(z1)
@@ -63,7 +68,7 @@ class NN:
         output = softmax(z3)
 
         if gradient:
-            # Backpropagation, update derrivatives
+            # Backpropagation, update derivatives
             delta = output - y_batch
             self.dW3 = np.dot(a2.T, delta)
             self.db3 = np.sum(delta, axis=0, keepdims=True)
@@ -77,7 +82,15 @@ class NN:
         return output
 
     def update_weights(self, learning_rate=0.1):
-        # Update weights and biases
+        """
+        Updates weight by taking a step of size learning_rate into
+        the direction of the negative gradient
+
+        Args:
+            learning_rate (float): learning rate
+
+        Returns: -
+        """
         self.W1 -= learning_rate * self.dW1
         self.b1 -= learning_rate * self.db1
         self.W2 -= learning_rate * self.dW2
@@ -85,15 +98,8 @@ class NN:
         self.W3 -= learning_rate * self.dW3
         self.b3 -= learning_rate * self.db3
 
+        return
 
-    def update_weights(self, learning_rate):
-        # Update weights and biases
-        self.W1 -= learning_rate * self.dW1
-        self.b1 -= learning_rate * self.db1
-        self.W2 -= learning_rate * self.dW2
-        self.b2 -= learning_rate * self.db2
-        self.W3 -= learning_rate * self.dW3
-        self.b3 -= learning_rate * self.db3
 
 
 

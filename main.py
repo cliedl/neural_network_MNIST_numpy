@@ -4,8 +4,6 @@ import pandas as pd
 from src.model import NN
 from src.data import data_loader, process_data
 
-
-
 if __name__ == "__main__":
     X_train, y_train, X_test, y_test = data_loader()
     X_train, y_train, X_test, y_test, y_train_onehot = process_data(X_train, y_train, X_test, y_test)
