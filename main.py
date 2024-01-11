@@ -5,9 +5,13 @@ from src.model import NN
 from src.data import data_loader, process_data
 
 if __name__ == "__main__":
+    # Load data
     X_train, y_train, X_test, y_test = data_loader()
+
+    # Process data
     X_train, y_train, X_test, y_test, y_train_onehot = process_data(X_train, y_train, X_test, y_test)
 
+    # Create instance of neural network
     model = NN()
 
     # Training parameters
@@ -18,6 +22,7 @@ if __name__ == "__main__":
     test_accuracy_list = []
     train_accuracy_list = []
 
+    # Training loop
     for epoch in range(epochs):
         for i in range(0, len(X_train), batch_size):
             x_batch = X_train[i:i + batch_size]
@@ -39,8 +44,7 @@ if __name__ == "__main__":
         test_accuracy = np.mean(test_predictions == y_test)
         test_accuracy_list.append(test_accuracy)
 
-        print(
-            f"Epoch {epoch + 1: >2}/{epochs}, Accuracy training set: {train_accuracy:.4f}, Accuracy test set: {test_accuracy:.4f}")
+        print(f"Epoch {epoch + 1: >2}/{epochs}, Accuracy training set: {train_accuracy:.4f}, Accuracy test set: {test_accuracy:.4f}")
 
 
     results = { 'learning_rate': learning_rate,
