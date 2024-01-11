@@ -36,18 +36,18 @@ def process_data(X_train, y_train, X_test, y_test):
     Processes data: Normalizes features to range [0, 1] and flattens feature vector
 
     Args:
-        X_train:
-        y_train:
-        X_test:
-        y_test:
+        X_train (numpy.ndarray): 3d array with dimensions (size_training_data, 28, 28)
+        y_train (numpy.ndarray): 1d array with dimensions (size_training_data)
+        X_test (numpy.ndarray): 3d array with dimensions (size_test_data, 28, 28)
+        y_test (numpy.ndarray):1d array with dimensions (size_test_data)
 
     X_train,
     Returns:
-        X_train: normalized and flattened
-        y_train: as input
-        X_test: normalized and flattened
-        y_test: as input
-        y_train_onehot: one hot encoding of y_train
+        X_train (numpy.ndarray): normalized and flattened, dimensions (size_training_data, 28*28)
+        y_train (numpy.ndarray): as input
+        X_test (numpy.ndarray): normalized and flattened, dimensions (size_test_data, 28*28)
+        y_test (numpy.ndarray): as input
+        y_train_onehot (numpy.ndarray): one hot encoding of y_train, (size_training_data)
     """
     # Normalize to 1
     X_train = X_train / 255.

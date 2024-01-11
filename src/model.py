@@ -19,11 +19,13 @@ class NN:
         # Initialize weights
         self.W1, self.W2, self.W3, self.b1, self.b2, self.b3 = self.initialize_wb()
 
+        np.random.seed(42)
+
     def initialize_wb(self):
         """
         Initialize weights and biases for a neural network.
 
-        Parameters:
+        Args:
         - input_size (int): Number of input features.
         - hidden1_size (int): Number of neurons in the first hidden layer.
         - hidden2_size (int): Number of neurons in the second hidden layer.
