@@ -1,42 +1,54 @@
 import numpy as np
+import pandas as pd
 
 from src.model import NN
 from src.data import data_loader, process_data
 
-X_train, y_train, X_test, y_test = data_loader()
-X_train, y_train, X_test, y_test, y_train_onehot = process_data(X_train, y_train, X_test, y_test)
 
-model = NN()
 
-# Training parameters
-learning_rate = 0.1
-epochs = 10
-batch_size = 64
+if __name__ == "__main__":
+    X_train, y_train, X_test, y_test = data_loader()
+    X_train, y_train, X_test, y_test, y_train_onehot = process_data(X_train, y_train, X_test, y_test)
 
-test_accuracy_list = []
-train_accuracy_list = []
+    model = NN()
 
-for epoch in range(epochs):
-    for i in range(0, len(X_train), batch_size):
-        x_batch = X_train[i:i + batch_size]
-        y_batch = y_train_onehot[i:i + batch_size]
+    # Training parameters
+    learning_rate = 0.1
+    epochs = 10
+    batch_size = 64
 
-        output = model.forward_pass(x_batch, y_batch)
+    test_accuracy_list = []
+    train_accuracy_list = []
 
-        model.update_weights(learning_rate)
+    for epoch in range(epochs):
+        for i in range(0, len(X_train), batch_size):
+            x_batch = X_train[i:i + batch_size]
+            y_batch = y_train_onehot[i:i + batch_size]
 
-    # Train accuracy
-    output = model.forward_pass(X_train, y_train, gradient=False)
-    train_predictions = np.argmax(output, axis=1)
-    train_accuracy = np.mean(train_predictions == y_train)
-    train_accuracy_list.append(train_accuracy)
+            output = model.forward_pass(x_batch, y_batch)
 
-    # Test accuracy
-    output = model.forward_pass(X_test, y_test, gradient=False)
-    test_predictions = np.argmax(output, axis=1)
-    test_accuracy = np.mean(test_predictions == y_test)
-    test_accuracy_list.append(test_accuracy)
+            model.update_weights(learning_rate)
 
-    print(
-        f"Epoch {epoch + 1: >2}/{epochs}, Accuracy training set: {train_accuracy:.4f}, Accuracy test set: {test_accuracy:.4f}")
+        # Train accuracy
+        output = model.forward_pass(X_train, y_train, gradient=False)
+        train_predictions = np.argmax(output, axis=1)
+        train_accuracy = np.mean(train_predictions == y_train)
+        train_accuracy_list.append(train_accuracy)
 
+        # Test accuracy
+        output = model.forward_pass(X_test, y_test, gradient=False)
+        test_predictions = np.argmax(output, axis=1)
+        test_accuracy = np.mean(test_predictions == y_test)
+        test_accuracy_list.append(test_accuracy)
+
+        print(
+            f"Epoch {epoch + 1: >2}/{epochs}, Accuracy training set: {train_accuracy:.4f}, Accuracy test set: {test_accuracy:.4f}")
+
+
+    results = { 'learning_rate': learning_rate,
+                'epochs':epochs,
+                'batch_size': batch_size,
+                'test_accuracy': test_accuracy_list,
+                'train_accuracy': train_accuracy_list}
+
+    np.save('results_per_epoch.npy', results)
