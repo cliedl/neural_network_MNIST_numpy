@@ -6,5 +6,5 @@ The network is then trained on the MNIST dataset in order to learn how to predic
 
 Instructions:
 1) Clone repository
-2) Install requirements: pip install -r requirements. txt
+2) Install requirements: pip install -r requirements.txt
 3) Run the training script (main.py)
